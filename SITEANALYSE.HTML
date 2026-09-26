@@ -1,0 +1,402 @@
+From: <Saved by Blink>
+Snapshot-Content-Location: file:///C:/Users/elbri/Downloads/Agents_IA_Missions_avec_rapport_telechargeable%20(8)%20-%20Copie.html
+Subject: =?utf-8?Q?Plateforme=20Autonome=20d'Agents=20IA=20=E2=80=94=20Missions=20?=
+ =?utf-8?Q?r=C3=A9elles=20&=20Paiements=20MetaMask?=
+Date: Fri, 25 Sep 2026 05:05:02 GMT
+MIME-Version: 1.0
+Content-Type: multipart/related;
+	type="text/html";
+	boundary="----MultipartBoundary--NB6sMaS5BLfOMjm3PuGYVuyXYkGgzbon7dbjW5foQu----"
+
+
+------MultipartBoundary--NB6sMaS5BLfOMjm3PuGYVuyXYkGgzbon7dbjW5foQu----
+Content-Type: text/html
+Content-ID: <frame-C8C94F1E66AE53147F01C2C53647C616@mhtml.blink>
+Content-Transfer-Encoding: quoted-printable
+Content-Location: file:///C:/Users/elbri/Downloads/Agents_IA_Missions_avec_rapport_telechargeable%20(8)%20-%20Copie.html
+
+<!DOCTYPE html><html lang=3D"fr"><head><meta http-equiv=3D"Content-Type" co=
+ntent=3D"text/html; charset=3DUTF-8"><link rel=3D"stylesheet" type=3D"text/=
+css" href=3D"cid:css-bf4b3bd4-194c-427b-9934-1c7e2554d37d@mhtml.blink" />
+
+<meta name=3D"viewport" content=3D"width=3Ddevice-width, initial-scale=3D1,=
+ viewport-fit=3Dcover">
+<title>Plateforme Autonome d'Agents IA =E2=80=94 Missions r=C3=A9elles &amp=
+; Paiements MetaMask</title>
+
+</head>
+<body>
+<div class=3D"container">
+  <header>
+    <h1>Plateforme Autonome d'Agents IA</h1>
+    <div style=3D"display:flex;gap:10px;flex-wrap:wrap;align-items:center">
+      <button id=3D"wallet-btn" class=3D"btn">Connecter MetaMask</button>
+      <a href=3D"https://metamask.io/download" target=3D"_blank" style=3D"c=
+olor:var(--muted);font-size:.8rem">Pas MetaMask ? Installer =E2=86=92</a>
+      <button id=3D"start-btn" class=3D"btn" style=3D"background-color: rgb=
+(239, 68, 68);">Arr=C3=AAter le syst=C3=A8me</button>
+      <button id=3D"report-btn" class=3D"btn" style=3D"background:var(--ok)=
+">=F0=9F=93=A5 T=C3=A9l=C3=A9charger le rapport (CSV)</button>
+      <label style=3D"display:flex;align-items:center;gap:6px;color:var(--m=
+uted);font-size:.85rem;background:var(--card);border:1px solid var(--border=
+);padding:8px 12px;border-radius:6px">
+        <input type=3D"checkbox" id=3D"auto-validate" style=3D"width:auto">=
+Validation automatique des missions
+      </label>
+    </div>
+  </header>
+
+  <div class=3D"info-box">
+    =F0=9F=94=8D <b>Agent Scout r=C3=A9el</b> : cherche automatiquement de =
+vraies primes ("bounties") ouvertes sur GitHub via l'API publique GitHub =
+=E2=80=94 aucune donn=C3=A9e invent=C3=A9e.
+  </div>
+  <div class=3D"warn-box">
+    =E2=9A=A0=EF=B8=8F Aucun paiement n'est automatique : MetaMask demander=
+a toujours ta confirmation manuelle avant tout envoi r=C3=A9el de fonds.
+  </div>
+
+  <div class=3D"card">
+    <h2>Portefeuille</h2>
+    <div id=3D"wallet-info" class=3D"wallet-box">Non connect=C3=A9.</div>
+  </div>
+
+  <div class=3D"card">
+    <h2>=F0=9F=92=B0 Gains cumul=C3=A9s (missions r=C3=A9ellement pay=C3=A9=
+es)</h2>
+    <div style=3D"display:flex;gap:32px;flex-wrap:wrap;align-items:center">
+      <div>
+        <div style=3D"font-size:1.8rem;font-weight:bold;color:var(--ok)" id=
+=3D"total-earnings">0.00000 ETH</div>
+        <div style=3D"font-size:.75rem;color:var(--muted)">Total confirm=C3=
+=A9 on-chain via MetaMask</div>
+      </div>
+      <div>
+        <div style=3D"font-size:1.8rem;font-weight:bold;color:var(--accent)=
+" id=3D"missions-paid-count">0</div>
+        <div style=3D"font-size:.75rem;color:var(--muted)">Missions pay=C3=
+=A9es</div>
+      </div>
+    </div>
+    <button class=3D"btn small" style=3D"margin-top:12px;background:#ef4444=
+">R=C3=A9initialiser le compteur</button>
+  </div>
+
+  <div class=3D"card">
+    <h2>Backend agent IA (optionnel =E2=80=94 3 options, par ordre de prior=
+it=C3=A9)</h2>
+
+    <div class=3D"warn-box">
+      =E2=9A=A0=EF=B8=8F Toute cl=C3=A9 API saisie ici reste dans ton navig=
+ateur mais est visible dans le code source / outils d=C3=A9veloppeur de cet=
+te page. =C3=80 utiliser uniquement en local =E2=80=94 ne partage/publie ja=
+mais ce fichier une fois une cl=C3=A9 renseign=C3=A9e.
+    </div>
+
+    <div style=3D"font-size:.85rem;margin-bottom:6px"><b>Option 1 (priorit=
+=C3=A9) =E2=80=94 Cl=C3=A9 API Google AI Studio (Gemini)</b></div>
+    <a href=3D"https://aistudio.google.com/apikey" target=3D"_blank" style=
+=3D"color:var(--accent);font-size:.8rem">Obtenir une cl=C3=A9 API Google AI=
+ Studio =E2=86=92</a>
+    <label>Cl=C3=A9 API Google AI Studio</label>
+    <input id=3D"google-api-key" type=3D"password" placeholder=3D"AIza...">
+
+    <div style=3D"font-size:.85rem;margin:14px 0 6px"><b>Option 2 =E2=80=94=
+ Cl=C3=A9 API Anthropic (utilis=C3=A9e si aucune cl=C3=A9 Google renseign=
+=C3=A9e)</b></div>
+    <a href=3D"https://console.anthropic.com/settings/keys" target=3D"_blan=
+k" style=3D"color:var(--accent);font-size:.8rem">Obtenir une cl=C3=A9 API A=
+nthropic =E2=86=92</a>
+    <label>Cl=C3=A9 API Anthropic</label>
+    <input id=3D"api-key" type=3D"password" placeholder=3D"sk-ant-...">
+
+    <div style=3D"font-size:.85rem;margin:14px 0 6px"><b>Option 3 =E2=80=94=
+ Backend perso (utilis=C3=A9 si aucune des deux cl=C3=A9s ci-dessus n'est r=
+enseign=C3=A9e)</b></div>
+    <div style=3D"display:flex;gap:16px;flex-wrap:wrap;margin-bottom:10px;f=
+ont-size:.8rem">
+      <a href=3D"https://glitch.com/create" target=3D"_blank" style=3D"colo=
+r:var(--accent)">Cr=C3=A9er le backend sur Glitch =E2=86=92</a>
+    </div>
+    <label>URL de ton backend d'analyse IA (une fois d=C3=A9ploy=C3=A9 sur =
+Glitch)</label>
+    <input id=3D"backend-url" placeholder=3D"https://ton-projet.glitch.me/a=
+nalyze">
+
+    <div style=3D"font-size:.75rem;color:var(--muted);margin-top:10px">Sans=
+ aucune des 3 options configur=C3=A9es, l'agent Manager IA sera simplement =
+d=C3=A9sactiv=C3=A9 (pas de fausse analyse affich=C3=A9e).</div>
+    <div style=3D"font-size:.75rem;color:var(--muted);margin-top:6px">=F0=
+=9F=94=84 Ces champs sont enregistr=C3=A9s automatiquement dans ton navigat=
+eur (localStorage) et recharg=C3=A9s =C3=A0 chaque ouverture de cette page =
+=E2=80=94 uniquement sur cette machine, jamais envoy=C3=A9s ailleurs.</div>
+    <button class=3D"btn small" style=3D"margin-top:8px;background:#ef4444"=
+>=F0=9F=97=91=EF=B8=8F Effacer les cl=C3=A9s enregistr=C3=A9es sur cet appa=
+reil</button>
+  </div>
+
+  <div class=3D"card">
+    <h2>Ajouter une mission manuelle (paiement r=C3=A9el possible)</h2>
+    <label>Titre</label><input id=3D"m-title" placeholder=3D"Ex: Audit de c=
+ode">
+    <label>Adresse destinataire (0x...)</label><input id=3D"m-addr" placeho=
+lder=3D"0x...">
+    <label>Montant (ETH)</label><input id=3D"m-amount" type=3D"number" step=
+=3D"0.0001" placeholder=3D"0.01">
+    <button class=3D"btn" style=3D"margin-top:12px">Ajouter =C3=A0 la file<=
+/button>
+  </div>
+
+  <div class=3D"card">
+    <h2>R=C3=A9seau d'Agents Ind=C3=A9pendants</h2>
+    <div class=3D"agent-list">
+      <div class=3D"agent-badge"><strong>Agent-Scout-01</strong><br><small>=
+Recherche r=C3=A9elle (API GitHub)</small><br><span id=3D"status-scout" cla=
+ss=3D"status"></span> <span id=3D"label-scout">Erreur</span></div>
+      <div class=3D"agent-badge"><strong>Agent-Manager-01</strong><br><smal=
+l>Analyse IA (via ton backend)</small><br><span id=3D"status-manager" class=
+=3D"status"></span> <span id=3D"label-manager">En attente</span></div>
+      <div class=3D"agent-badge"><strong>Agent-Worker-Alpha</strong><br><sm=
+all>Traitement</small><br><span id=3D"status-w1" class=3D"status"></span> <=
+span id=3D"label-w1">En attente</span></div>
+      <div class=3D"agent-badge"><strong>Agent-Worker-Beta</strong><br><sma=
+ll>V=C3=A9rification</small><br><span id=3D"status-w2" class=3D"status"></s=
+pan> <span id=3D"label-w2">En attente</span></div>
+      <div class=3D"agent-badge"><strong>Agent-Escrow</strong><br><small>Pa=
+iement MetaMask r=C3=A9el</small><br><span id=3D"status-escrow" class=3D"st=
+atus"></span> <span id=3D"label-escrow">En attente</span></div>
+    </div>
+  </div>
+
+  <div class=3D"grid">
+    <div class=3D"card">
+      <h2>Mission en cours</h2>
+      <div id=3D"missions-container"><p style=3D"color:var(--muted);text-al=
+ign:center">D=C3=A9marre le syst=C3=A8me : le Scout cherchera une vraie mis=
+sion automatiquement.</p></div>
+    </div>
+    <div class=3D"card">
+      <h2>Logs Syst=C3=A8me</h2>
+      <div id=3D"log-console" class=3D"log-console"><div class=3D"log-entry=
+">[Syst=C3=A8me] Initialis=C3=A9 et pr=C3=AAt.</div><div class=3D"log-entry=
+ success">[07:02:06] =F0=9F=94=91 Configuration API recharg=C3=A9e automati=
+quement depuis cet appareil.</div><div class=3D"log-entry warn">[07:02:19] =
+Syst=C3=A8me d=C3=A9marr=C3=A9.</div><div class=3D"log-entry info">[07:02:1=
+9] Agent-Scout-01 : interrogation de l'API GitHub (issues avec label bounty=
+)...</div><div class=3D"log-entry err">[07:02:19] Agent-Scout-01 : =C3=A9ch=
+ec de recherche =E2=80=94 Failed to fetch</div><div class=3D"log-entry info=
+">[07:02:24] Agent-Scout-01 : interrogation de l'API GitHub (issues avec la=
+bel bounty)...</div><div class=3D"log-entry err">[07:02:24] Agent-Scout-01 =
+: =C3=A9chec de recherche =E2=80=94 Failed to fetch</div><div class=3D"log-=
+entry info">[07:02:29] Agent-Scout-01 : interrogation de l'API GitHub (issu=
+es avec label bounty)...</div><div class=3D"log-entry err">[07:02:29] Agent=
+-Scout-01 : =C3=A9chec de recherche =E2=80=94 Failed to fetch</div><div cla=
+ss=3D"log-entry info">[07:02:34] Agent-Scout-01 : interrogation de l'API Gi=
+tHub (issues avec label bounty)...</div><div class=3D"log-entry err">[07:02=
+:34] Agent-Scout-01 : =C3=A9chec de recherche =E2=80=94 Failed to fetch</di=
+v><div class=3D"log-entry info">[07:02:39] Agent-Scout-01 : interrogation d=
+e l'API GitHub (issues avec label bounty)...</div><div class=3D"log-entry e=
+rr">[07:02:39] Agent-Scout-01 : =C3=A9chec de recherche =E2=80=94 Failed to=
+ fetch</div><div class=3D"log-entry info">[07:02:44] Agent-Scout-01 : inter=
+rogation de l'API GitHub (issues avec label bounty)...</div><div class=3D"l=
+og-entry err">[07:02:44] Agent-Scout-01 : =C3=A9chec de recherche =E2=80=94=
+ Failed to fetch</div><div class=3D"log-entry info">[07:02:49] Agent-Scout-=
+01 : interrogation de l'API GitHub (issues avec label bounty)...</div><div =
+class=3D"log-entry err">[07:02:49] Agent-Scout-01 : =C3=A9chec de recherche=
+ =E2=80=94 Failed to fetch</div><div class=3D"log-entry info">[07:02:54] Ag=
+ent-Scout-01 : interrogation de l'API GitHub (issues avec label bounty)...<=
+/div><div class=3D"log-entry err">[07:02:54] Agent-Scout-01 : =C3=A9chec de=
+ recherche =E2=80=94 Failed to fetch</div><div class=3D"log-entry info">[07=
+:02:59] Agent-Scout-01 : interrogation de l'API GitHub (issues avec label b=
+ounty)...</div><div class=3D"log-entry err">[07:02:59] Agent-Scout-01 : =C3=
+=A9chec de recherche =E2=80=94 Failed to fetch</div><div class=3D"log-entry=
+ info">[07:03:04] Agent-Scout-01 : interrogation de l'API GitHub (issues av=
+ec label bounty)...</div><div class=3D"log-entry err">[07:03:04] Agent-Scou=
+t-01 : =C3=A9chec de recherche =E2=80=94 Failed to fetch</div><div class=3D=
+"log-entry info">[07:03:09] Agent-Scout-01 : interrogation de l'API GitHub =
+(issues avec label bounty)...</div><div class=3D"log-entry err">[07:03:09] =
+Agent-Scout-01 : =C3=A9chec de recherche =E2=80=94 Failed to fetch</div><di=
+v class=3D"log-entry info">[07:03:14] Agent-Scout-01 : interrogation de l'A=
+PI GitHub (issues avec label bounty)...</div><div class=3D"log-entry err">[=
+07:03:14] Agent-Scout-01 : =C3=A9chec de recherche =E2=80=94 Failed to fetc=
+h</div><div class=3D"log-entry info">[07:03:19] Agent-Scout-01 : interrogat=
+ion de l'API GitHub (issues avec label bounty)...</div><div class=3D"log-en=
+try err">[07:03:19] Agent-Scout-01 : =C3=A9chec de recherche =E2=80=94 Fail=
+ed to fetch</div><div class=3D"log-entry info">[07:03:24] Agent-Scout-01 : =
+interrogation de l'API GitHub (issues avec label bounty)...</div><div class=
+=3D"log-entry err">[07:03:24] Agent-Scout-01 : =C3=A9chec de recherche =E2=
+=80=94 Failed to fetch</div><div class=3D"log-entry info">[07:03:29] Agent-=
+Scout-01 : interrogation de l'API GitHub (issues avec label bounty)...</div=
+><div class=3D"log-entry err">[07:03:29] Agent-Scout-01 : =C3=A9chec de rec=
+herche =E2=80=94 Failed to fetch</div><div class=3D"log-entry info">[07:03:=
+34] Agent-Scout-01 : interrogation de l'API GitHub (issues avec label bount=
+y)...</div><div class=3D"log-entry err">[07:03:34] Agent-Scout-01 : =C3=A9c=
+hec de recherche =E2=80=94 Failed to fetch</div><div class=3D"log-entry inf=
+o">[07:03:39] Agent-Scout-01 : interrogation de l'API GitHub (issues avec l=
+abel bounty)...</div><div class=3D"log-entry err">[07:03:39] Agent-Scout-01=
+ : =C3=A9chec de recherche =E2=80=94 Failed to fetch</div><div class=3D"log=
+-entry info">[07:03:44] Agent-Scout-01 : interrogation de l'API GitHub (iss=
+ues avec label bounty)...</div><div class=3D"log-entry err">[07:03:44] Agen=
+t-Scout-01 : =C3=A9chec de recherche =E2=80=94 Failed to fetch</div><div cl=
+ass=3D"log-entry info">[07:03:49] Agent-Scout-01 : interrogation de l'API G=
+itHub (issues avec label bounty)...</div><div class=3D"log-entry err">[07:0=
+3:49] Agent-Scout-01 : =C3=A9chec de recherche =E2=80=94 Failed to fetch</d=
+iv><div class=3D"log-entry info">[07:03:54] Agent-Scout-01 : interrogation =
+de l'API GitHub (issues avec label bounty)...</div><div class=3D"log-entry =
+err">[07:03:54] Agent-Scout-01 : =C3=A9chec de recherche =E2=80=94 Failed t=
+o fetch</div><div class=3D"log-entry info">[07:03:59] Agent-Scout-01 : inte=
+rrogation de l'API GitHub (issues avec label bounty)...</div><div class=3D"=
+log-entry err">[07:03:59] Agent-Scout-01 : =C3=A9chec de recherche =E2=80=
+=94 Failed to fetch</div><div class=3D"log-entry info">[07:04:04] Agent-Sco=
+ut-01 : interrogation de l'API GitHub (issues avec label bounty)...</div><d=
+iv class=3D"log-entry err">[07:04:04] Agent-Scout-01 : =C3=A9chec de recher=
+che =E2=80=94 Failed to fetch</div><div class=3D"log-entry info">[07:04:09]=
+ Agent-Scout-01 : interrogation de l'API GitHub (issues avec label bounty).=
+..</div><div class=3D"log-entry err">[07:04:09] Agent-Scout-01 : =C3=A9chec=
+ de recherche =E2=80=94 Failed to fetch</div><div class=3D"log-entry info">=
+[07:04:14] Agent-Scout-01 : interrogation de l'API GitHub (issues avec labe=
+l bounty)...</div><div class=3D"log-entry err">[07:04:14] Agent-Scout-01 : =
+=C3=A9chec de recherche =E2=80=94 Failed to fetch</div><div class=3D"log-en=
+try info">[07:04:19] Agent-Scout-01 : interrogation de l'API GitHub (issues=
+ avec label bounty)...</div><div class=3D"log-entry err">[07:04:19] Agent-S=
+cout-01 : =C3=A9chec de recherche =E2=80=94 Failed to fetch</div><div class=
+=3D"log-entry info">[07:04:24] Agent-Scout-01 : interrogation de l'API GitH=
+ub (issues avec label bounty)...</div><div class=3D"log-entry err">[07:04:2=
+4] Agent-Scout-01 : =C3=A9chec de recherche =E2=80=94 Failed to fetch</div>=
+<div class=3D"log-entry info">[07:04:29] Agent-Scout-01 : interrogation de =
+l'API GitHub (issues avec label bounty)...</div><div class=3D"log-entry err=
+">[07:04:29] Agent-Scout-01 : =C3=A9chec de recherche =E2=80=94 Failed to f=
+etch</div><div class=3D"log-entry info">[07:04:34] Agent-Scout-01 : interro=
+gation de l'API GitHub (issues avec label bounty)...</div><div class=3D"log=
+-entry err">[07:04:34] Agent-Scout-01 : =C3=A9chec de recherche =E2=80=94 F=
+ailed to fetch</div><div class=3D"log-entry info">[07:04:39] Agent-Scout-01=
+ : interrogation de l'API GitHub (issues avec label bounty)...</div><div cl=
+ass=3D"log-entry err">[07:04:39] Agent-Scout-01 : =C3=A9chec de recherche =
+=E2=80=94 Failed to fetch</div><div class=3D"log-entry info">[07:04:44] Age=
+nt-Scout-01 : interrogation de l'API GitHub (issues avec label bounty)...</=
+div><div class=3D"log-entry err">[07:04:44] Agent-Scout-01 : =C3=A9chec de =
+recherche =E2=80=94 Failed to fetch</div><div class=3D"log-entry info">[07:=
+04:49] Agent-Scout-01 : interrogation de l'API GitHub (issues avec label bo=
+unty)...</div><div class=3D"log-entry err">[07:04:49] Agent-Scout-01 : =C3=
+=A9chec de recherche =E2=80=94 Failed to fetch</div><div class=3D"log-entry=
+ info">[07:04:54] Agent-Scout-01 : interrogation de l'API GitHub (issues av=
+ec label bounty)...</div><div class=3D"log-entry err">[07:04:54] Agent-Scou=
+t-01 : =C3=A9chec de recherche =E2=80=94 Failed to fetch</div><div class=3D=
+"log-entry info">[07:04:59] Agent-Scout-01 : interrogation de l'API GitHub =
+(issues avec label bounty)...</div><div class=3D"log-entry err">[07:04:59] =
+Agent-Scout-01 : =C3=A9chec de recherche =E2=80=94 Failed to fetch</div></d=
+iv>
+    </div>
+  </div>
+</div>
+
+
+
+
+</body></html>
+------MultipartBoundary--NB6sMaS5BLfOMjm3PuGYVuyXYkGgzbon7dbjW5foQu----
+Content-Type: text/css
+Content-Transfer-Encoding: quoted-printable
+Content-Location: cid:css-bf4b3bd4-194c-427b-9934-1c7e2554d37d@mhtml.blink
+
+@charset "utf-8";
+
+:root { --bg: #0f172a; --card: #1e293b; --accent: #3b82f6; --ok: #10b981; -=
+-text: #f8fafc; --muted: #94a3b8; --border: #334155; --warn: #f59e0b; }
+
+* { box-sizing: border-box; }
+
+body { font-family: system-ui, -apple-system, "Segoe UI", Roboto, sans-seri=
+f; background: var(--bg); color: var(--text); margin: 0px; padding-right: 2=
+0px; padding-left: 20px; padding-top: calc(20px + env(safe-area-inset-top,0=
+px)); padding-bottom: calc(20px + env(safe-area-inset-bottom,0px)); }
+
+.container { max-width: 1200px; margin: 0px auto; }
+
+header { display: flex; justify-content: space-between; align-items: center=
+; flex-wrap: wrap; gap: 10px; border-bottom: 1px solid var(--border); paddi=
+ng-bottom: 20px; margin-bottom: 20px; }
+
+h1 { margin: 0px; font-size: 1.4rem; color: var(--accent); }
+
+.btn { background: var(--accent); color: rgb(255, 255, 255); border-width: =
+medium; border-style: none; border-color: currentcolor; border-image: none;=
+ padding: 10px 20px; border-radius: 6px; cursor: pointer; font-weight: bold=
+; }
+
+.btn:hover { opacity: 0.9; }
+
+.btn.small { padding: 6px 12px; font-size: 0.8rem; }
+
+.grid { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
+
+@media (max-width: 768px) {
+  .grid { grid-template-columns: 1fr; }
+}
+
+.card { background: var(--card); border: 1px solid var(--border); border-ra=
+dius: 8px; padding: 20px; margin-bottom: 20px; }
+
+.card h2 { margin-top: 0px; font-size: 1.1rem; border-bottom: 1px solid var=
+(--border); padding-bottom: 10px; }
+
+.agent-list { display: grid; grid-template-columns: repeat(auto-fit, minmax=
+(200px, 1fr)); gap: 10px; }
+
+.agent-badge { background: rgba(59, 130, 246, 0.1); border: 1px solid var(-=
+-accent); padding: 10px; border-radius: 6px; font-size: 0.85rem; }
+
+.agent-badge .status { display: inline-block; width: 8px; height: 8px; bord=
+er-radius: 50%; background: rgb(234, 179, 8); margin-right: 5px; }
+
+.agent-badge .status.active { background: var(--ok); }
+
+.log-console { background: rgb(2, 6, 23); border: 1px solid var(--border); =
+border-radius: 6px; padding: 15px; font-family: monospace; font-size: 0.85r=
+em; height: 250px; overflow-y: auto; color: rgb(56, 189, 248); }
+
+.log-entry { margin-bottom: 5px; }
+
+.log-entry.success { color: var(--ok); }
+
+.log-entry.warn { color: var(--warn); }
+
+.log-entry.err { color: rgb(239, 68, 68); }
+
+.mission-item { background: rgba(255, 255, 255, 0.03); border: 1px solid va=
+r(--border); padding: 12px; border-radius: 6px; margin-bottom: 10px; }
+
+.progress-bar { width: 100%; background: var(--border); height: 8px; border=
+-radius: 4px; overflow: hidden; margin-top: 8px; }
+
+.progress-fill { height: 100%; background: var(--accent); width: 0%; transi=
+tion: width 0.3s; }
+
+.wallet-box { font-family: monospace; font-size: 0.85rem; color: var(--mute=
+d); word-break: break-all; }
+
+.wallet-box b { color: var(--ok); }
+
+.warn-box { background: rgba(245, 158, 11, 0.1); border: 1px solid var(--wa=
+rn); border-radius: 6px; padding: 10px; font-size: 0.8rem; color: var(--war=
+n); margin-bottom: 16px; }
+
+.info-box { background: rgba(59, 130, 246, 0.08); border: 1px solid var(--a=
+ccent); border-radius: 6px; padding: 10px; font-size: 0.8rem; color: var(--=
+muted); margin-bottom: 16px; }
+
+label { display: block; font-size: 0.8rem; color: var(--muted); margin-top:=
+ 8px; margin-bottom: 4px; }
+
+input { width: 100%; padding: 8px; border-radius: 6px; border: 1px solid va=
+r(--border); background: rgb(15, 23, 42); color: var(--text); font-size: 0.=
+85rem; }
+
+.analysis { background: rgb(2, 6, 23); border-left: 3px solid var(--accent)=
+; padding: 10px; margin-top: 8px; font-size: 0.8rem; color: var(--text); wh=
+ite-space: pre-wrap; }
+
+.manual-pay { display: none; margin-top: 10px; }
+
+.manual-pay.show { display: block; }
+------MultipartBoundary--NB6sMaS5BLfOMjm3PuGYVuyXYkGgzbon7dbjW5foQu------
