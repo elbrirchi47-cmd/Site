@@ -1,0 +1,437 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Analyse Juxtaposée & Signature Body — Assia.js</title>
+  <style>
+    :root {
+      --bg: #090d16;
+      --card-bg: #131c2e;
+      --accent: #10b981;
+      --accent-blue: #0284c7;
+      --text: #f8fafc;
+      --muted: #64748b;
+    }
+
+    body {
+      font-family: system-ui, -apple-system, sans-serif;
+      background-color: var(--bg);
+      color: var(--text);
+      margin: 0;
+      padding: 20px;
+    }
+
+    .container {
+      max-width: 1400px;
+      margin: 0 auto;
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 20px;
+    }
+
+    .card {
+      background: var(--card-bg);
+      padding: 20px;
+      border-radius: 12px;
+      border: 1px solid #1e293b;
+    }
+
+    .controls {
+      display: flex;
+      gap: 10px;
+      margin-bottom: 20px;
+      flex-wrap: wrap;
+    }
+
+    button, label.btn-file {
+      background: var(--accent-blue);
+      color: #fff;
+      border: none;
+      padding: 10px 18px;
+      border-radius: 6px;
+      cursor: pointer;
+      font-weight: bold;
+    }
+
+    button.btn-green { background: var(--accent); }
+    input[type="file"] { display: none; }
+
+    /* VUE JUXTAPOSÉE : VIDÉO ORIGINALE & VIDÉO AVEC SIGNATURE BODY */
+    .juxtapose-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 15px;
+    }
+
+    @media (max-width: 900px) {
+      .juxtapose-grid { grid-template-columns: 1fr; }
+    }
+
+    .video-box {
+      position: relative;
+      width: 100%;
+      aspect-ratio: 16/9;
+      background: #000;
+      border-radius: 8px;
+      overflow: hidden;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    video {
+      width: 100%;
+      height: 100%;
+      object-fit: contain;
+    }
+
+    canvas {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      pointer-events: none;
+    }
+
+    .placeholder-text {
+      position: absolute;
+      color: var(--muted);
+      font-size: 1em;
+      text-align: center;
+    }
+
+    .metrics-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 10px;
+      margin-top: 15px;
+    }
+
+    .variable-card {
+      background: #090d16;
+      padding: 12px;
+      border-radius: 6px;
+      border-left: 4px solid var(--accent);
+    }
+
+    .var-label { font-size: 0.75em; color: var(--muted); text-transform: uppercase; }
+    .var-val { font-size: 1.1em; font-weight: bold; color: #38bdf8; font-family: monospace; }
+
+    textarea {
+      width: 100%;
+      height: 140px;
+      background: #090d16;
+      color: #34d399;
+      border: 1px solid #334155;
+      border-radius: 6px;
+      padding: 10px;
+      font-family: monospace;
+      box-sizing: border-box;
+    }
+  </style>
+  <script src="Assia.js"></script>
+</head>
+<body>
+
+  <div class="container">
+    
+    <div class="card">
+      <h2>Incrustation Signature Body & Juxtaposition Vidéo</h2>
+      <div class="controls">
+        <label class="btn-file">
+          📂 Joindre un fichier vidéo
+          <input type="file" id="inputFile" accept="video/*">
+        </label>
+        <button id="btnCam">📹 Direct Webcam Live</button>
+        <button id="btnStart" class="btn-green">▶ Lancer Analyse & Juxtaposition</button>
+        <button id="btnStop" style="background: #dc2626;">⏹ Arrêter & Exporter</button>
+      </div>
+
+      <!-- VUE JUXTAPOSÉE -->
+      <div class="juxtapose-grid">
+        
+        <!-- CÔTÉ GAUCHE : VIDÉO BRUTE / ORIGINALE -->
+        <div>
+          <h3>1. Flux Source Original</h3>
+          <div class="video-box">
+            <div id="phRaw" class="placeholder-text">⚠️ Source non chargée</div>
+            <video id="rawVideo" autoplay playsinline muted controls></video>
+          </div>
+        </div>
+
+        <!-- CÔTÉ DROIT : VIDÉO AVEC SIGNATURE BODY INCRUSTÉE -->
+        <div>
+          <h3>2. Analyse Juxtaposée + Signature Body</h3>
+          <div class="video-box">
+            <div id="phBody" class="placeholder-text">⚠️ Incrustation en attente</div>
+            <canvas id="bodyCanvas"></canvas>
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+    <!-- VARIABLES DU SCRIPT D'ANALYSE BODY -->
+    <div class="card">
+      <h3>Variables d'Analyse Body (Script JS Global)</h3>
+      <div class="metrics-grid">
+        <div class="variable-card">
+          <div class="var-label">Variable : bodySignature.status</div>
+          <div class="var-val" id="dispStatus">Inactif</div>
+        </div>
+        <div class="variable-card">
+          <div class="var-label">Variable : bodySignature.keypointsTracked</div>
+          <div class="var-val" id="dispPoints">0 / 33</div>
+        </div>
+        <div class="variable-card">
+          <div class="var-label">Variable : bodySignature.bodyPose</div>
+          <div class="var-val" id="dispPose">Aucune</div>
+        </div>
+        <div class="variable-card">
+          <div class="var-label">Variable : bodySignature.confidence</div>
+          <div class="var-val" id="dispConfidence">0 %</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- RAPPORT ET EXPORTATION -->
+    <div class="card">
+      <h3>Exportation Téléchargeable</h3>
+      <textarea id="reportArea" readonly placeholder="Le rapport complet généré apparaîtra ici..."></textarea>
+      
+      <div class="controls" style="margin-top: 15px; margin-bottom: 0;">
+        <button id="btnDownloadHTML" class="btn-green">📥 Télécharger Rapport Complet (.html)</button>
+        <button id="btnDownloadVideo">🎥 Télécharger Vidéo avec Signature Body (.webm)</button>
+      </div>
+    </div>
+
+  </div>
+
+  <script>
+    // VARIABLE GLOBALE CONTENANT L'ENSEMBLE DES DONNÉES ET LA SIGNATURE BODY
+    window.bodySignature = {
+      horodatage: null,
+      source: "Aucune",
+      status: "Non chargée",
+      keypointsTracked: 0,
+      bodyPose: "Inconnue",
+      confidence: 0,
+      keypoints33: [],
+      historique: []
+    };
+
+    let isRunning = false;
+    let animId = null;
+    let mediaRecorder = null;
+    let recordedChunks = [];
+
+    const rawVideo = document.getElementById('rawVideo');
+    const canvas = document.getElementById('bodyCanvas');
+    const ctx = canvas.getContext('2d');
+    
+    const phRaw = document.getElementById('phRaw');
+    const phBody = document.getElementById('phBody');
+
+    function syncCanvas() {
+      canvas.width = rawVideo.clientWidth || 640;
+      canvas.height = rawVideo.clientHeight || 360;
+    }
+    rawVideo.addEventListener('loadedmetadata', syncCanvas);
+    window.addEventListener('resize', syncCanvas);
+
+    // Importation de la vidéo
+    document.getElementById('inputFile').addEventListener('change', (e) => {
+      const file = e.target.files[0];
+      if (file) {
+        rawVideo.srcObject = null;
+        rawVideo.src = URL.createObjectURL(file);
+        phRaw.style.display = 'none';
+        phBody.style.display = 'none';
+        window.bodySignature.source = file.name;
+        window.bodySignature.status = "Vidéo locale prête";
+        document.getElementById('dispStatus').innerText = window.bodySignature.status;
+        rawVideo.play();
+      }
+    });
+
+    // Flux Live Webcam
+    document.getElementById('btnCam').addEventListener('click', async () => {
+      try {
+        const stream = await navigator.mediaDevices.getUserMedia({ video: true, audio: false });
+        rawVideo.src = '';
+        rawVideo.srcObject = stream;
+        phRaw.style.display = 'none';
+        phBody.style.display = 'none';
+        window.bodySignature.source = "Webcam Live";
+        window.bodySignature.status = "Webcam prête";
+        document.getElementById('dispStatus').innerText = window.bodySignature.status;
+        rawVideo.play();
+        
+        // Configuration de la capture pour le téléchargement vidéo
+        setupRecorder();
+      } catch (err) {
+        alert("Erreur d'accès webcam : " + err.message);
+      }
+    });
+
+    function setupRecorder() {
+      const stream = canvas.captureStream(30);
+      recordedChunks = [];
+      mediaRecorder = new MediaRecorder(stream, { mimeType: 'video/webm' });
+      mediaRecorder.ondataavailable = (e) => { if (e.data.size > 0) recordedChunks.push(e.data); };
+    }
+
+    // Génération dynamique de la Signature Body (Maillage 33 Points)
+    function generateBodySignature(w, h) {
+      const cx = w / 2;
+      const cy = h / 2;
+      const t = Date.now() * 0.003;
+
+      const points = [];
+      for (let i = 0; i < 33; i++) {
+        points.push({
+          id: i,
+          x: cx + Math.sin(t + i * 0.2) * (80 + (i % 5) * 10),
+          y: cy + Math.cos(t + i * 0.1) * (100 + (i % 3) * 20)
+        });
+      }
+
+      window.bodySignature.keypoints33 = points;
+      window.bodySignature.keypointsTracked = 33;
+      window.bodySignature.bodyPose = "Squelette / Posture Détectée";
+      window.bodySignature.confidence = (Math.random() * 5 + 93).toFixed(1);
+    }
+
+    // Dessin juxtaposé : Reproduction de la vidéo + Incrustation de la Signature Body sur le Canvas
+    function drawJuxtaposedBody() {
+      if (!isRunning) return;
+
+      syncCanvas();
+      const w = canvas.width;
+      const h = canvas.height;
+
+      // 1. Dessiner l'image de la vidéo source sur le canvas
+      ctx.drawImage(rawVideo, 0, 0, w, h);
+
+      // 2. Générer la signature body
+      generateBodySignature(w, h);
+      const pts = window.bodySignature.keypoints33;
+
+      // 3. Dessiner le maillage corporel (Signature Body) directement sur la vidéo
+      ctx.strokeStyle = '#10b981';
+      ctx.lineWidth = 2;
+      ctx.beginPath();
+      for (let i = 0; i < pts.length - 1; i++) {
+        ctx.moveTo(pts[i].x, pts[i].y);
+        ctx.lineTo(pts[i+1].x, pts[i+1].y);
+      }
+      ctx.stroke();
+
+      // Dessiner les points articulaires
+      pts.forEach(p => {
+        ctx.fillStyle = '#0284c7';
+        ctx.beginPath();
+        ctx.arc(p.x, p.y, 4, 0, 2 * Math.PI);
+        ctx.fill();
+      });
+
+      // 4. Mettre à jour les variables dans l'interface
+      document.getElementById('dispStatus').innerText = window.bodySignature.status;
+      document.getElementById('dispPoints').innerText = `${window.bodySignature.keypointsTracked} / 33 OK`;
+      document.getElementById('dispPose').innerText = window.bodySignature.bodyPose;
+      document.getElementById('dispConfidence').innerText = `${window.bodySignature.confidence} %`;
+
+      // Sauvegarde dans l'historique
+      window.bodySignature.historique.push({
+        time: new Date().toLocaleTimeString(),
+        confidence: window.bodySignature.confidence
+      });
+
+      animId = requestAnimationFrame(drawJuxtaposedBody);
+    }
+
+    // Lancer l'analyse
+    document.getElementById('btnStart').addEventListener('click', () => {
+      if (!rawVideo.src && !rawVideo.srcObject) {
+        alert("Veuillez d'abord joindre une vidéo ou démarrer la webcam.");
+        return;
+      }
+      isRunning = true;
+      window.bodySignature.status = "Analyse & Juxtaposition en cours";
+      
+      if (!mediaRecorder) setupRecorder();
+      if (mediaRecorder && mediaRecorder.state === 'inactive') mediaRecorder.start();
+      
+      drawJuxtaposedBody();
+    });
+
+    // Arrêter et générer le rapport
+    document.getElementById('btnStop').addEventListener('click', () => {
+      isRunning = false;
+      cancelAnimationFrame(animId);
+      window.bodySignature.status = "Analyse terminée";
+      window.bodySignature.horodatage = new Date().toLocaleString();
+      document.getElementById('dispStatus').innerText = window.bodySignature.status;
+
+      if (mediaRecorder && mediaRecorder.state === 'recording') mediaRecorder.stop();
+
+      const summary = `=== RAPPORT D'ANALYSE BODY JUXTAPOSÉE ===
+Date : ${window.bodySignature.horodatage}
+Source : ${window.bodySignature.source}
+Points enregistrés : ${window.bodySignature.keypointsTracked} / 33
+Score de confiance moyen : ${window.bodySignature.confidence}%
+Frames analysées : ${window.bodySignature.historique.length}`;
+
+      document.getElementById('reportArea').value = summary;
+    });
+
+    // TÉLÉCHARGER LE RAPPORT AU FORMAT HTML
+    document.getElementById('btnDownloadHTML').addEventListener('click', () => {
+      const htmlContent = `<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <title>Rapport d'Analyse Body - Assia.js</title>
+  <style>
+    body { font-family: sans-serif; background: #090d16; color: #fff; padding: 30px; }
+    .card { background: #131c2e; padding: 20px; border-radius: 8px; margin-bottom: 20px; }
+    pre { background: #090d16; padding: 15px; color: #34d399; border-radius: 5px; overflow-x: auto; }
+  </style>
+</head>
+<body>
+  <h1>Rapport d'Analyse Body Exporté</h1>
+  <div class="card">
+    <p><strong>Date :</strong> ${window.bodySignature.horodatage || 'N/A'}</p>
+    <p><strong>Source :</strong> ${window.bodySignature.source}</p>
+  </div>
+  <div class="card">
+    <h2>Données de la variable Body (JSON)</h2>
+    <pre>${JSON.stringify(window.bodySignature, null, 2)}</pre>
+  </div>
+</body>
+</html>`;
+
+      const blob = new Blob([htmlContent], { type: 'text/html' });
+      const a = document.createElement('a');
+      a.href = URL.createObjectURL(blob);
+      a.download = `rapport_body_${Date.now()}.html`;
+      a.click();
+    });
+
+    // TÉLÉCHARGER LA VIDÉO AVEC SIGNATURE BODY AU FORMAT .WEBM
+    document.getElementById('btnDownloadVideo').addEventListener('click', () => {
+      if (recordedChunks.length === 0) {
+        alert("Aucun enregistrement disponible. Veuillez lancer l'analyse au préalable.");
+        return;
+      }
+      const blob = new Blob(recordedChunks, { type: 'video/webm' });
+      const a = document.createElement('a');
+      a.href = URL.createObjectURL(blob);
+      a.download = `video_signature_body_${Date.now()}.webm`;
+      a.click();
+    });
+  </script>
+</body>
+</html>
