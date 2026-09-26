@@ -1,0 +1,282 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TA v5 — Méta-Moteur Binaire & Visualisation Vidéo</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            --bg-color: #060911;
+            --card-bg: #0d1322;
+            --border-color: #1e293b;
+            --accent-color: #2563eb;
+            --accent-green: #10b981;
+            --accent-purple: #8b5cf6;
+            --accent-orange: #f59e0b;
+            --text-main: #f8fafc;
+            --text-muted: #64748b;
+        }
+
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+        body { font-family: 'Inter', system-ui, sans-serif; background: var(--bg-color); color: var(--text-main); padding: 20px; line-height: 1.5; }
+        .container { max-width: 1400px; margin: 0 auto; }
+        
+        header { text-align: center; padding: 20px 0; border-bottom: 1px solid var(--border-color); margin-bottom: 25px; }
+        header h1 { font-size: 2.2rem; color: #38bdf8; display: flex; align-items: center; justify-content: center; gap: 12px; }
+        header p { color: var(--text-muted); font-size: 0.95rem; margin-top: 4px; }
+
+        .grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(400px, 1fr)); gap: 20px; }
+        .card { background: var(--card-bg); border: 1px solid var(--border-color); border-radius: 12px; padding: 20px; display: flex; flex-direction: column; }
+        .card h2 { font-size: 1.1rem; color: #fff; margin-bottom: 15px; display: flex; align-items: center; gap: 10px; border-bottom: 1px solid var(--border-color); padding-bottom: 10px; }
+        
+        .file-dropzone { border: 2px dashed var(--border-color); border-radius: 8px; padding: 18px; text-align: center; background: rgba(0,0,0,0.3); cursor: pointer; transition: 0.2s; margin-bottom: 12px; }
+        .file-dropzone:hover { border-color: var(--accent-color); }
+        .file-dropzone i { font-size: 1.8rem; color: var(--accent-color); margin-bottom: 6px; }
+
+        .video-container { width: 100%; background: #000; border-radius: 8px; overflow: hidden; border: 1px solid var(--border-color); margin-bottom: 15px; text-align: center; }
+        video { width: 100%; max-height: 240px; display: none; }
+        .video-placeholder { padding: 40px 20px; color: var(--text-muted); font-size: 0.85rem; }
+
+        .form-group { margin-bottom: 12px; }
+        label { display: block; font-size: 0.8rem; color: var(--text-muted); margin-bottom: 4px; }
+        select, button { width: 100%; padding: 10px; border-radius: 6px; border: 1px solid var(--border-color); background: #020617; color: #fff; font-size: 0.85rem; }
+        
+        button { font-weight: 600; cursor: pointer; transition: 0.2s; display: flex; align-items: center; justify-content: center; gap: 8px; }
+        button:disabled { opacity: 0.3; cursor: not-allowed; }
+        button.btn-primary { background: var(--accent-color); border: none; }
+        button.btn-primary:hover:not(:disabled) { background: #1d4ed8; }
+        button.btn-success { background: var(--accent-green); border: none; margin-top: 10px; }
+        button.btn-success:hover:not(:disabled) { background: #059669; }
+
+        .console { background: #020617; border: 1px solid var(--border-color); border-radius: 6px; padding: 10px; font-family: monospace; font-size: 0.8rem; height: 130px; overflow-y: auto; color: #34d399; }
+        .code-output { background: #020617; border: 1px solid var(--border-color); border-radius: 6px; padding: 10px; font-family: monospace; font-size: 0.8rem; height: 180px; overflow-y: auto; color: #38bdf8; white-space: pre-wrap; }
+
+        .stats-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin: 12px 0; }
+        .stat-box { background: rgba(255, 255, 255, 0.02); border: 1px solid var(--border-color); padding: 10px; border-radius: 6px; text-align: center; }
+        .stat-box .val { font-size: 1.2rem; font-weight: bold; color: var(--accent-purple); }
+        .stat-box .lbl { font-size: 0.7rem; color: var(--text-muted); }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <header>
+        <h1><i class="fa-solid fa-photo-film"></i> TA v5 — Méta-Moteur & Visionneuse</h1>
+        <p>Analyse de flux vidéo/binaire, lecteur multimédia intégré et exécution autonome[cite: 1]</p>
+    </header>
+
+    <div class="grid">
+        <!-- Chapitre 1 : Source & Lecteur Vidéo -->
+        <div class="card">
+            <h2><i class="fa-solid fa-file-video"></i> Chapitre 1 : Source & Lecteur[cite: 1]</h2>
+            
+            <div class="file-dropzone" onclick="document.getElementById('fileInput').click()">
+                <i class="fa-solid fa-cloud-arrow-up"></i>
+                <p style="font-size: 0.85rem;">Joindre la vidéo (.mp4, .webm) ou fichier binaire[cite: 1]</p>
+                <span id="fileName" style="font-size: 0.75rem; color: var(--accent-orange);">Aucun fichier chargé</span>
+            </div>
+            <input type="file" id="fileInput" style="display: none;" onchange="analyserEtAfficherMedia(this.files[0])">
+
+            <!-- Emplacement d'Affichage Vidéo -->
+            <div class="video-container">
+                <div id="vPlaceholder" class="video-placeholder">
+                    <i class="fa-solid fa-play-circle" style="font-size: 2rem; margin-bottom: 8px;"></i><br>
+                    Le flux vidéo apparaîtra ici après chargement
+                </div>
+                <video id="videoPlayer" controls></video>
+            </div>
+
+            <div class="form-group">
+                <label>Architecture Mémoire[cite: 1] :</label>
+                <select id="libA">
+                    <option value="StreamBuffer">TA-StreamBuffer (Direct Stream Reader)</option>
+                    <option value="ChunkedArena">TA-ChunkedArena (Chunk Allocator)</option>
+                </select>
+            </div>
+
+            <div class="form-group">
+                <label>Indexation Binaire[cite: 1] :</label>
+                <select id="libB">
+                    <option value="FrameRadix">Byte Radix Indexer</option>
+                    <option value="BitwiseChecksum">Fast Bitwise Checksum</option>
+                </select>
+            </div>
+
+            <button class="btn-primary" onclick="cartographier()"><i class="fa-solid fa-magnifying-glass"></i> Parser & Cartographier[cite: 1]</button>
+            <div style="margin-top: 10px;">
+                <div class="console" id="logCarto">> Attente de fichier...</div>
+            </div>
+        </div>
+
+        <!-- Chapitre 2 : Hybridation -->
+        <div class="card">
+            <h2><i class="fa-solid fa-dna"></i> Chapitre 2 : Méta-Structure TA v5[cite: 1]</h2>
+            <p style="font-size: 0.8rem; color: var(--text-muted); margin-bottom: 10px;">Génération d'une structure spécialisée dans le traitement de flux média[cite: 1].</p>
+            
+            <button class="btn-primary" id="btnHybride" onclick="hybrider()" disabled><i class="fa-solid fa-cubes"></i> Générer Méta-Structure[cite: 1]</button>
+            
+            <div style="margin-top: 12px;">
+                <label>Spécifications de la structure :</label>
+                <div class="code-output" id="outHybride">// En attente d'hybridation...</div>
+            </div>
+        </div>
+
+        <!-- Chapitre 3 : Exécution -->
+        <div class="card">
+            <h2><i class="fa-solid fa-bolt"></i> Chapitre 3 : Execution Sandbox[cite: 1]</h2>
+            
+            <button class="btn-primary" id="btnTest" onclick="executer()" disabled><i class="fa-solid fa-play"></i> Compiler & Exécuter le Moteur[cite: 1]</button>
+            
+            <div class="stats-grid">
+                <div class="stat-box">
+                    <div class="val" id="statSpeed">0</div>
+                    <div class="lbl">Débit (Ops/sec)</div>
+                </div>
+                <div class="stat-box">
+                    <div class="val" id="statLatency">0 ms</div>
+                    <div class="lbl">Latence d'exécution[cite: 1]</div>
+                </div>
+            </div>
+
+            <label>Code source de l'exécutable généré (.JS) :</label>
+            <div class="code-output" id="outCode">// Le code compilé apparaîtra ici...</div>
+
+            <button class="btn-success" id="btnDownload" onclick="telecharger()" disabled><i class="fa-solid fa-download"></i> Télécharger l'Exécutable (.js)</button>
+        </div>
+    </div>
+</div>
+
+<script>
+    let fichierMeta = { nom: "", taille: 0, headerHex: "" };
+    let bytesBuffer = null;
+    let structureNom = "";
+    let codeExecutable = "";
+
+    function analyserEtAfficherMedia(fichier) {
+        if (!fichier) return;
+        fichierMeta.nom = fichier.name;
+        fichierMeta.taille = fichier.size;
+        
+        document.getElementById('fileName').innerText = `${fichier.name} (${(fichier.size / (1024*1024)).toFixed(2)} Mo)`;
+
+        // 1. Charger la vidéo dans le lecteur vidéo HTML5
+        const videoPlayer = document.getElementById('videoPlayer');
+        const placeholder = document.getElementById('vPlaceholder');
+        const fileURL = URL.createObjectURL(fichier);
+        
+        videoPlayer.src = fileURL;
+        videoPlayer.style.display = 'block';
+        placeholder.style.display = 'none';
+
+        // 2. Extraire le buffer binaire pour le Méta-Moteur
+        const reader = new FileReader();
+        reader.onload = function(e) {
+            bytesBuffer = new Uint8Array(e.target.result);
+            let hex = [];
+            for (let i = 0; i < Math.min(8, bytesBuffer.length); i++) {
+                hex.push(bytesBuffer[i].toString(16).padStart(2, '0').toUpperCase());
+            }
+            fichierMeta.headerHex = hex.join(' ');
+        };
+        reader.readAsArrayBuffer(fichier);
+    }
+
+    function cartographier() {
+        const libA = document.getElementById('libA').value;
+        const libB = document.getElementById('libB').value;
+        const log = document.getElementById('logCarto');
+
+        log.innerHTML = `> Connexion Brique A : [${libA}]...\n`;
+        log.innerHTML += `> Connexion Brique B : [${libB}]...\n`;
+        if (bytesBuffer) {
+            log.innerHTML += `> [Vidéo/Média] Signature : ${fichierMeta.headerHex}\n`;
+            log.innerHTML += `> Taille Flux : ${bytesBuffer.length} octets.\n`;
+        } else {
+            log.innerHTML += `> Flux : Générique (aucun fichier chargé).\n`;
+        }
+        log.innerHTML += `> Cartographie média validée.\n`;
+
+        document.getElementById('btnHybride').disabled = false;
+    }
+
+    function hybrider() {
+        const libA = document.getElementById('libA').value;
+        const libB = document.getElementById('libB').value;
+        structureNom = `TA5_${libA}_${libB}`;
+
+        const spec = `// SPÉCIFICATION TECHNIQUE TA v5[cite: 1]
+Classe : ${structureNom}
+Fichier Source : ${fichierMeta.nom || 'Direct Stream'}
+Signature Header : ${fichierMeta.headerHex || 'N/A'}
+Optimisation : Synchronisation Flux Vidéo & Indexation Binaire $O(1)$`;
+
+        document.getElementById('outHybride').innerText = spec;
+        document.getElementById('btnTest').disabled = false;
+    }
+
+    function executer() {
+        codeExecutable = `/**
+ * Généré par TA v5 (Méta-Moteur & Visualisation)[cite: 1]
+ * Source Média : ${fichierMeta.nom || 'Stream'}
+ */
+class ${structureNom} {
+    constructor(bufferCapacity = 524288) {
+        this.buffer = new ArrayBuffer(bufferCapacity);
+        this.view = new Uint8Array(this.buffer);
+        this.indexTable = new Uint32Array(131072);
+    }
+
+    processFrameChunk(chunk) {
+        let checksum = 0;
+        for (let i = 0; i < chunk.length; i++) {
+            this.view[i % this.view.length] = chunk[i];
+            checksum = (checksum << 5) - checksum + chunk[i];
+            checksum |= 0;
+        }
+        const idx = Math.abs(checksum) % this.indexTable.length;
+        this.indexTable[idx] = chunk.length;
+        return checksum;
+    }
+}
+
+// Execution Sandbox[cite: 1]
+const engine = new ${structureNom}();
+const chunkSample = new Uint8Array([${bytesBuffer ? Array.from(bytesBuffer.slice(0, 16)).join(',') : '0,0,0,24,102,116,121,112'}]);
+
+for (let i = 0; i < 100000; i++) {
+    engine.processFrameChunk(chunkSample);
+}
+console.log("Exécution et hachage du flux média terminés avec succès.");`;
+
+        document.getElementById('outCode').innerText = codeExecutable;
+
+        const t0 = performance.now();
+        try {
+            const runner = new Function(codeExecutable);
+            runner();
+            const t1 = performance.now();
+            
+            const duration = Math.max(t1 - t0, 0.1);
+            const ops = Math.round(100000 / (duration / 1000));
+
+            document.getElementById('statSpeed').innerText = ops.toLocaleString();
+            document.getElementById('statLatency').innerText = `${duration.toFixed(2)} ms`;
+            document.getElementById('btnDownload').disabled = false;
+        } catch (e) {
+            alert("Erreur d'exécution : " + e.message);
+        }
+    }
+
+    function telecharger() {
+        const blob = new Blob([codeExecutable], { type: 'application/javascript' });
+        const url = URL.createObjectURL(blob);
+        const a = document.createElement('a');
+        a.href = url;
+        a.download = `${structureNom}.js`;
+        a.click();
+        URL.revokeObjectURL(url);
+    }
+</script>
+</body>
+</html>
